@@ -48,6 +48,14 @@ public class Image extends Drawable {
         return _bitmap;
     }
 
+    public float width() {
+        return (float) _bitmap.getWidth() / _style.scale;
+    }
+
+    public float height() {
+        return (float) _bitmap.getHeight() / _style.scale;
+    }
+
     @Override
     protected void finalize() throws Throwable {
         if(!_bitmap.isRecycled()) {
@@ -58,6 +66,10 @@ public class Image extends Drawable {
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+
+        if(_bitmap.isRecycled()) {
+            return;
+        }
 
         canvas.setDrawFilter(_drawFilter);
 
