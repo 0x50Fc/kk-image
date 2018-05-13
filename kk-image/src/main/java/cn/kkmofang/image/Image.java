@@ -13,26 +13,22 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 /**
- * Created by hailong11 on 2018/4/18.
+ * Created by zhanghailong on 2018/4/18.
  */
 
 public class Image extends Drawable {
 
-    private final Bitmap _bitmap;
+    private final BitmapProvider _bitmapProvider;
     private final Paint _paint;
     private final Rect _src = new Rect();
     private final RectF _dest = new RectF();
     private final PaintFlagsDrawFilter _drawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
     private final ImageStyle _style;
 
-    public Image(Bitmap bitmap,ImageStyle style) {
-        _bitmap = bitmap;
+    public Image(BitmapProvider bitmapProvider,ImageStyle style) {
+        _bitmapProvider = bitmapProvider;
         _style = style;
         _paint = new Paint();
         _paint.setAntiAlias(true);
@@ -45,31 +41,22 @@ public class Image extends Drawable {
     }
 
     public Bitmap getBitmap() {
-        return _bitmap;
+        return _bitmapProvider.getBitmap();
     }
 
     public float width() {
-        return (float) _bitmap.getWidth() / _style.scale;
+        return (float) _bitmapProvider.getBitmap().getWidth() / _style.scale;
     }
 
     public float height() {
-        return (float) _bitmap.getHeight() / _style.scale;
+        return (float) _bitmapProvider.getBitmap().getHeight() / _style.scale;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        if(!_bitmap.isRecycled()) {
-            _bitmap.recycle();
-        }
-        super.finalize();
-    }
 
     @Override
-    public void draw(@NonNull Canvas canvas) {
+    public void draw(Canvas canvas) {
 
-        if(_bitmap.isRecycled()) {
-            return;
-        }
+        Bitmap _bitmap = _bitmapProvider.getBitmap();
 
         canvas.setDrawFilter(_drawFilter);
 
@@ -399,17 +386,21 @@ public class Image extends Drawable {
     }
 
     @Override
-    public void setAlpha(@IntRange(from = 0, to = 255) int alpha) {
+    public void setAlpha(int alpha) {
         _paint.setAlpha(alpha);
     }
 
     @Override
-    public void setColorFilter(@Nullable ColorFilter colorFilter) {
+    public void setColorFilter(ColorFilter colorFilter) {
         _paint.setColorFilter(colorFilter);
     }
 
     @Override
     public int getOpacity() {
         return PixelFormat.TRANSPARENT;
+    }
+
+    public interface BitmapProvider {
+        Bitmap getBitmap();
     }
 }

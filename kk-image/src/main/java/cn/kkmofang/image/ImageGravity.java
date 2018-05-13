@@ -1,7 +1,7 @@
 package cn.kkmofang.image;
 
 /**
- * Created by hailong11 on 2018/4/18.
+ * Created by zhanghailong on 2018/4/18.
  */
 
 public enum ImageGravity {
