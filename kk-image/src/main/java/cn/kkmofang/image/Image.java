@@ -70,11 +70,24 @@ public class Image extends Drawable {
         int mCapLeft = _style.capLeft;
         int mCapTop = _style.capTop;
 
+        float xScale = 1.0f;
+        float yScale = 1.0f;
+
         if(mCapLeft != 0 && mCapTop != 0) {
             if(mWidth * v >= width) {
                 mCapLeft = 0;
             }
             if(mHeight * v >= height) {
+                mCapTop = 0;
+            }
+        } else if(mCapLeft != 0 && mCapTop == 0) {
+            xScale = (float) height / (float) mHeight;
+            if(mWidth * v >= mWidth * xScale) {
+                mCapLeft = 0;
+            }
+        } else if(mCapLeft == 0 && mCapTop != 0) {
+            yScale = (float) width / (float) mWidth;
+            if(mHeight * v >= mHeight * yScale) {
                 mCapTop = 0;
             }
         }
@@ -85,8 +98,8 @@ public class Image extends Drawable {
 
             if(_style.gravity == ImageGravity.RESIZE_ASPECT || _style.gravity == ImageGravity.RESIZE_ASPECT_FILL) {
 
-                float xScale = (float) width / (float) mWidth;
-                float yScale = (float) height / (float) mHeight;
+                xScale = (float) width / (float) mWidth;
+                yScale = (float) height / (float) mHeight;
                 float scale = _style.gravity == ImageGravity.RESIZE_ASPECT ? Math.min(xScale,yScale) : Math.max(xScale,yScale);
                 float toWidth = mWidth * scale;
                 float toHeight = mHeight * scale;
@@ -119,9 +132,6 @@ public class Image extends Drawable {
             }
 
         } else {
-
-            float xScale = 1.0f;
-            float yScale = 1.0f;
 
             if(mCapTop == 0) {
 
