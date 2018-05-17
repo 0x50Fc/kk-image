@@ -32,7 +32,6 @@ public class ImageCache {
                     in.close();
                 }
             } catch (IOException e) {
-                Log.d("kk",Log.getStackTraceString(e));
             }
         }
         return v;
