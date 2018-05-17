@@ -21,7 +21,7 @@ public class ImageCache {
     private final Map<String,SoftReference<Drawable>> _images = new TreeMap<>();
 
     public Drawable getImage(File file) {
-        Drawable v = getImage(file.getAbsoluteFile());
+        Drawable v = getImage(file.getAbsolutePath());
         if(v == null) {
             try {
                 FileInputStream in = new FileInputStream(file);
