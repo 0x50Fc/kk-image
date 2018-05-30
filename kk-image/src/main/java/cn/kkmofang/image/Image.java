@@ -23,7 +23,7 @@ public class Image extends Drawable {
     private final BitmapProvider _bitmapProvider;
     private final Paint _paint;
     private final Rect _src = new Rect();
-    private final RectF _dest = new RectF();
+    private final Rect _dest = new Rect();
     private final PaintFlagsDrawFilter _drawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
     private final ImageStyle _style;
 
@@ -52,6 +52,10 @@ public class Image extends Drawable {
         return (float) _bitmapProvider.getBitmap().getHeight() / _style.scale;
     }
 
+
+    public static int ceil(float v) {
+        return (int) Math.ceil(v);
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -109,10 +113,10 @@ public class Image extends Drawable {
                 _src.top = 0;
                 _src.bottom = mHeight;
 
-                _dest.left = (width - toWidth) * 0.5f;
-                _dest.right = _dest.left + toWidth;
-                _dest.top = (height - toHeight) * 0.5f;
-                _dest.bottom = _dest.top + toHeight;
+                _dest.left = (int) ((width - toWidth) * 0.5f);
+                _dest.right =  ceil(_dest.left + toWidth);
+                _dest.top = (int) ((height - toHeight) * 0.5f);
+                _dest.bottom = ceil(_dest.top + toHeight);
 
                 canvas.drawBitmap(_bitmap, _src, _dest, _paint);
 
@@ -147,12 +151,13 @@ public class Image extends Drawable {
                     _src.bottom = mHeight;
 
                     _dest.left = 0;
-                    _dest.right = capLeft;
+                    _dest.right = ceil(capLeft);
                     _dest.top = 0;
                     _dest.bottom = height;
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
+
 
                 {
                     _src.left = mCapLeft;
@@ -160,13 +165,14 @@ public class Image extends Drawable {
                     _src.top = 0;
                     _src.bottom = mHeight;
 
-                    _dest.left = capLeft;
-                    _dest.right = capRight;
+                    _dest.left = (int) capLeft;
+                    _dest.right = ceil(capRight);
                     _dest.top = 0;
                     _dest.bottom = height;
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
+
 
                 {
                     _src.left = mCapLeft + _style.capSize;
@@ -174,7 +180,7 @@ public class Image extends Drawable {
                     _src.top = 0;
                     _src.bottom = mHeight;
 
-                    _dest.left = capRight;
+                    _dest.left = (int) capRight;
                     _dest.right = width;
                     _dest.top = 0;
                     _dest.bottom = height;
@@ -199,7 +205,7 @@ public class Image extends Drawable {
                     _dest.left = 0;
                     _dest.right = width;
                     _dest.top = 0;
-                    _dest.bottom = capTop;
+                    _dest.bottom = ceil(capTop);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -212,8 +218,8 @@ public class Image extends Drawable {
 
                     _dest.left = 0;
                     _dest.right = mWidth;
-                    _dest.top = capTop;
-                    _dest.bottom = capBottom;
+                    _dest.top = (int) capTop;
+                    _dest.bottom = ceil(capBottom);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -226,7 +232,7 @@ public class Image extends Drawable {
 
                     _dest.left = 0;
                     _dest.right = mWidth;
-                    _dest.top = capBottom;
+                    _dest.top = (int) capBottom;
                     _dest.bottom = height;
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
@@ -247,9 +253,9 @@ public class Image extends Drawable {
                     _src.bottom = mCapTop;
 
                     _dest.left = 0;
-                    _dest.right = capLeft;
+                    _dest.right = ceil(capLeft);
                     _dest.top = 0;
-                    _dest.bottom = capTop;
+                    _dest.bottom = ceil(capTop);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -261,9 +267,9 @@ public class Image extends Drawable {
                     _src.bottom = mCapTop + _style.capSize;
 
                     _dest.left = 0;
-                    _dest.right = capLeft;
-                    _dest.top = capTop;
-                    _dest.bottom = capBottom;
+                    _dest.right = ceil(capLeft);
+                    _dest.top = (int) capTop;
+                    _dest.bottom = ceil(capBottom);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -275,8 +281,8 @@ public class Image extends Drawable {
                     _src.bottom = mHeight;
 
                     _dest.left = 0;
-                    _dest.right = capLeft;
-                    _dest.top = capBottom;
+                    _dest.right = ceil(capLeft);
+                    _dest.top = (int) capBottom;
                     _dest.bottom = height;
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
@@ -289,10 +295,10 @@ public class Image extends Drawable {
                     _src.top = 0;
                     _src.bottom = mCapTop;
 
-                    _dest.left = capRight;
+                    _dest.left = (int) capRight;
                     _dest.right = width;
                     _dest.top = 0;
-                    _dest.bottom = capTop;
+                    _dest.bottom = ceil(capTop);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -303,10 +309,10 @@ public class Image extends Drawable {
                     _src.top = mCapTop;
                     _src.bottom = mCapTop + _style.capSize;
 
-                    _dest.left = capRight;
+                    _dest.left = (int) capRight;
                     _dest.right = width;
-                    _dest.top = capTop;
-                    _dest.bottom = capBottom;
+                    _dest.top = (int) capTop;
+                    _dest.bottom = ceil(capBottom);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -317,13 +323,14 @@ public class Image extends Drawable {
                     _src.top = mCapTop + _style.capSize;
                     _src.bottom = mHeight;
 
-                    _dest.left = capRight;
+                    _dest.left = (int) capRight;
                     _dest.right = width;
-                    _dest.top = capBottom;
+                    _dest.top = (int) capBottom;
                     _dest.bottom = height;
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
+
 
                 //center
                 {
@@ -332,10 +339,10 @@ public class Image extends Drawable {
                     _src.top = 0;
                     _src.bottom = mCapTop;
 
-                    _dest.left = capLeft;
-                    _dest.right = capRight;
+                    _dest.left = (int) capLeft;
+                    _dest.right = ceil(capRight);
                     _dest.top = 0;
-                    _dest.bottom = capTop;
+                    _dest.bottom = ceil(capTop);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -346,10 +353,10 @@ public class Image extends Drawable {
                     _src.top = mCapTop;
                     _src.bottom = mCapTop + _style.capSize;
 
-                    _dest.left = capLeft;
-                    _dest.right = capRight;
-                    _dest.top = capTop;
-                    _dest.bottom = capBottom;
+                    _dest.left = (int)capLeft;
+                    _dest.right = ceil(capRight);
+                    _dest.top = (int)capTop;
+                    _dest.bottom = ceil(capBottom);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }
@@ -360,10 +367,10 @@ public class Image extends Drawable {
                     _src.top = mCapTop + _style.capSize;
                     _src.bottom = mHeight;
 
-                    _dest.left = capLeft;
-                    _dest.right = capRight;
-                    _dest.top = capBottom;
-                    _dest.bottom = height;
+                    _dest.left = (int)capLeft;
+                    _dest.right = ceil(capRight);
+                    _dest.top = (int)capBottom;
+                    _dest.bottom = ceil(height);
 
                     canvas.drawBitmap(_bitmap, _src, _dest, _paint);
                 }

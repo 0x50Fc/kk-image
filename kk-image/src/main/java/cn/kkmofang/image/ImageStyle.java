@@ -22,8 +22,8 @@ public class ImageStyle {
     }
 
     public ImageStyle(int capLeft,int capTop,int capSize,float scale,float radius,float density,ImageGravity gravity) {
-        this.capLeft = (int) Math.ceil(capLeft * scale);
-        this.capTop = (int) Math.ceil(capTop * scale);
+        this.capLeft = (int) (capLeft * scale);
+        this.capTop = (int) (capTop * scale);
         this.capSize = (int) Math.ceil(capSize * scale);
         this.radius = radius;
         this.scale = scale;
