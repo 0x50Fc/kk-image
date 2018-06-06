@@ -104,7 +104,7 @@ public class Image extends Drawable {
 
                 xScale = (float) width / (float) mWidth;
                 yScale = (float) height / (float) mHeight;
-                float scale = _style.gravity == ImageGravity.RESIZE_ASPECT ? Math.min(xScale,yScale) : Math.max(xScale,yScale);
+                float scale = _style.gravity == ImageGravity.RESIZE_ASPECT_FILL ? Math.min(xScale,yScale) : Math.max(xScale,yScale);
                 float toWidth = mWidth * scale;
                 float toHeight = mHeight * scale;
 
