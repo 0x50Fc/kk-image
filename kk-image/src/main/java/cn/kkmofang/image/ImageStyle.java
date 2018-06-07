@@ -18,7 +18,7 @@ public class ImageStyle {
     public ImageGravity gravity = ImageGravity.RESIZE_ASPECT_FILL;
 
     public ImageStyle(Context context) {
-        this(0,0,0,1.0f,0.0f,context.getResources().getDisplayMetrics().density,ImageGravity.RESIZE);
+        this(0,0,0,1.0f,0.0f,context.getResources().getDisplayMetrics().density,ImageGravity.RESIZE_ASPECT_FILL);
     }
 
     public ImageStyle(int capLeft,int capTop,int capSize,float scale,float radius,float density,ImageGravity gravity) {

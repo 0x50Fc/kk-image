@@ -101,22 +101,36 @@ public class Image extends Drawable {
         if(mCapLeft == 0 && mCapTop == 0) {
 
             if(_style.gravity == ImageGravity.RESIZE_ASPECT || _style.gravity == ImageGravity.RESIZE_ASPECT_FILL) {
+                xScale = (float) mWidth / (float) width;
+                yScale = (float) mHeight / (float) height;
+                float scale = _style.gravity==ImageGravity.RESIZE_ASPECT_FILL?Math.min(xScale, yScale):Math.max(xScale, yScale);
+                float toWidth;
+                float toHeight;
+                if (_style.gravity == ImageGravity.RESIZE_ASPECT_FILL){
+                    toWidth = width * scale;
+                    toHeight = height * scale;
+                    _src.left = Math.abs((int) ((mWidth - toWidth) * 0.5));
+                    _src.right = ceil(_src.left + toWidth);
+                    _src.top = Math.abs((int) ((mHeight - toHeight) * 0.5));
+                    _src.bottom = (int) (_src.top + toHeight);
 
-                xScale = (float) width / (float) mWidth;
-                yScale = (float) height / (float) mHeight;
-                float scale = _style.gravity == ImageGravity.RESIZE_ASPECT_FILL ? Math.min(xScale,yScale) : Math.max(xScale,yScale);
-                float toWidth = mWidth * scale;
-                float toHeight = mHeight * scale;
+                    _dest.left = 0;
+                    _dest.right = width;
+                    _dest.top = 0;
+                    _dest.bottom = height;
+                }else {
+                    toWidth = mWidth / scale;
+                    toHeight = mHeight / scale;
+                    _src.left = 0;
+                    _src.right = mWidth;
+                    _src.top = 0;
+                    _src.bottom = mHeight;
 
-                _src.left = 0;
-                _src.right = mWidth;
-                _src.top = 0;
-                _src.bottom = mHeight;
-
-                _dest.left = (int) ((width - toWidth) * 0.5f);
-                _dest.right =  ceil(_dest.left + toWidth);
-                _dest.top = (int) ((height - toHeight) * 0.5f);
-                _dest.bottom = ceil(_dest.top + toHeight);
+                    _dest.left = (int) ((width - toWidth) * 0.5f);
+                    _dest.right =  ceil(_dest.left + toWidth);
+                    _dest.top = (int) ((height - toHeight) * 0.5f);
+                    _dest.bottom = ceil(_dest.top + toHeight);
+                }
 
                 canvas.drawBitmap(_bitmap, _src, _dest, _paint);
 
