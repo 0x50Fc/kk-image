@@ -110,9 +110,9 @@ public class Image extends Drawable {
                     toWidth = width * scale;
                     toHeight = height * scale;
                     _src.left = Math.abs((int) ((mWidth - toWidth) * 0.5));
-                    _src.right = ceil(_src.left + toWidth);
+                    _src.right = Math.min(mWidth, ceil(_src.left + toWidth));
                     _src.top = Math.abs((int) ((mHeight - toHeight) * 0.5));
-                    _src.bottom = (int) (_src.top + toHeight);
+                    _src.bottom = Math.min(mHeight, ceil(_src.top + toHeight));
 
                     _dest.left = 0;
                     _dest.right = width;
