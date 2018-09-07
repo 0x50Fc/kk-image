@@ -61,6 +61,8 @@ public class Image extends Drawable {
     }
 
 
+
+
     public static int ceil(float v) {
         return (int) Math.ceil(v);
     }
@@ -73,8 +75,8 @@ public class Image extends Drawable {
 
             canvas.setDrawFilter(_drawFilter);
 
-            int width = canvas.getWidth();
-            int height = canvas.getHeight();
+            int width = getBounds().width();
+            int height = getBounds().height();
             int mWidth = _bitmap.getWidth();
             int mHeight = _bitmap.getHeight();
 
