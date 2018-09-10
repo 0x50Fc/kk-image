@@ -75,8 +75,8 @@ public class Image extends Drawable {
 
             canvas.setDrawFilter(_drawFilter);
 
-            int width = getBounds().width();
-            int height = getBounds().height();
+            int width = getBounds().width() - _style.marginLeft - _style.marginRight;
+            int height = getBounds().height() - _style.marginTop - _style.marginBottom;
             int mWidth = _bitmap.getWidth();
             int mHeight = _bitmap.getHeight();
 
