@@ -1,6 +1,7 @@
 package cn.kkmofang.image;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -21,12 +22,13 @@ public class ImageCache {
     private final Map<String,SoftReference<Drawable>> _images = new TreeMap<>();
 
     public Drawable getImage(File file) {
-        Drawable v = getImage(file.getAbsolutePath());
-        if(v == null) {
+        String path = file.getAbsolutePath();
+        Drawable v = getImage(path);
+        if(v == null && !TextUtils.isEmpty(path)) {
             try {
                 FileInputStream in = new FileInputStream(file);
                 try {
-                    v = getImage(in, file.getAbsolutePath());
+                    v = getImage(in, path);
                 }
                 finally {
                     in.close();

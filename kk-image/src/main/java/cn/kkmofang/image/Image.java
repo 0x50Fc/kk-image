@@ -107,7 +107,7 @@ public class Image extends Drawable {
                 }
             }
 
-            int sc= canvas.saveLayer(0,0,width,height,_paint,Canvas.ALL_SAVE_FLAG);
+            int sc = canvas.save();
 
             if(mCapLeft == 0 && mCapTop == 0) {
 
